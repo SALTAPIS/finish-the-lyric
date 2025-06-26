@@ -101,11 +101,96 @@ body {
 
 /* Start screen */
 .start-screen {
+  text-align: center;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 2rem;
-  text-align: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 2rem;
+}
+
+/* Category selection */
+.category-selection {
+  margin-top: 2rem;
+  width: 100%;
+  max-width: 800px;
+}
+
+.category-title {
+  font-size: 2rem;
+  margin-bottom: 2rem;
+  color: #fff;
+}
+
+.category-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.category-btn {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border: none;
+  border-radius: 15px;
+  padding: 2rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.category-btn:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+.category-btn.everybody {
+  grid-column: 1 / -1;
+  background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+}
+
+.category-name {
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: white;
+}
+
+.category-count {
+  font-size: 1rem;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.category-desc {
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.9);
+  margin-top: 0.5rem;
+  font-style: italic;
+}
+
+/* Pop category specific */
+.category-btn:nth-child(1) {
+  background: linear-gradient(135deg, #FA8BFF 0%, #2BD2FF 52%, #2BFF88 90%);
+}
+
+/* Rock category specific */
+.category-btn:nth-child(2) {
+  background: linear-gradient(135deg, #434343 0%, #000000 100%);
+}
+
+/* Soul category specific */
+.category-btn:nth-child(3) {
+  background: linear-gradient(135deg, #f2994a 0%, #f2c94c 100%);
+}
+
+/* Hip Hop category specific */
+.category-btn:nth-child(4) {
+  background: linear-gradient(135deg, #ee0979 0%, #ff6a00 100%);
 }
 
 .start-btn {
@@ -176,60 +261,33 @@ body {
   align-items: center;
 }
 
-/* Lyric container animations */
+/* Lyric display */
 .lyric-container {
   text-align: center;
+  margin: 2rem auto;
+  max-width: 90%;
+  transition: all 2s ease-out;
   position: absolute;
-  transition: all 0.5s ease-out;
-  z-index: 5;
-}
-
-.lyric-container.lyric-enter {
-  animation: lyricEnter 2s ease-out forwards;
-}
-
-.lyric-container.lyric-listening {
-  top: 10%;
-  transform: translate(-50%, 0) scale(0.7);
+  top: 50%;
   left: 50%;
-}
-
-@keyframes lyricEnter {
-  0% {
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%) scale(1.5);
-    opacity: 0;
-  }
-  50% {
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%) scale(1.2);
-    opacity: 1;
-  }
-  100% {
-    top: 10%;
-    left: 50%;
-    transform: translate(-50%, 0) scale(0.7);
-    opacity: 1;
-  }
+  transform: translate(-50%, -50%);
+  width: 90%;
 }
 
 .hint {
-  font-size: 1.2rem;
-  color: #ffaa00;
+  color: #888;
+  font-size: 2.4rem;
   margin-bottom: 1rem;
   font-style: italic;
-  text-shadow: 0 0 10px rgba(255, 170, 0, 0.6);
 }
 
 .lyric-text {
-  font-size: 3rem;
+  font-size: 4rem;
   font-weight: bold;
   color: #fff;
+  margin: 1rem 0;
   line-height: 1.4;
-  text-shadow: 0 0 20px rgba(255, 255, 255, 0.8);
-  letter-spacing: 1px;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 }
 
 .lyric-listening .lyric-text {
@@ -509,23 +567,25 @@ body {
 /* Audio indicator */
 .audio-indicator {
   position: fixed;
-  bottom: 2rem;
-  left: 2rem;
+  top: 20px;
+  right: 20px;
   font-size: 2rem;
-  animation: musicPulse 2s ease-in-out infinite;
-  opacity: 0.6;
-  z-index: 20;
+  opacity: 0.7;
+  animation: pulse 2s ease-in-out infinite;
 }
 
-@keyframes musicPulse {
-  0%, 100% {
-    transform: scale(1);
-    opacity: 0.6;
-  }
-  50% {
-    transform: scale(1.2);
-    opacity: 0.8;
-  }
+/* Loading audio indicator */
+.loading-audio {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0, 0, 0, 0.8);
+  color: white;
+  padding: 10px 20px;
+  border-radius: 20px;
+  font-size: 1rem;
+  z-index: 100;
 }
 
 /* Animations */
@@ -601,5 +661,41 @@ body {
   100% {
     transform: translateY(100vh);
   }
+}
+
+/* Animation states */
+.lyric-enter {
+  animation: lyricEnter 2s ease-out forwards;
+}
+
+@keyframes lyricEnter {
+  0% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 0;
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1.1);
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(-50%) translateY(0) scale(1);
+    top: 80px;
+  }
+}
+
+.lyric-listening {
+  position: fixed;
+  top: 80px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 90%;
+}
+
+.lyric-listening .hint {
+  font-size: 1.8rem;
+}
+
+.lyric-listening .lyric-text {
+  font-size: 2.4rem;
 }
 
