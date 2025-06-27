@@ -10,7 +10,7 @@ An interactive karaoke-style music trivia game where players speak or sing the n
 
 ### Features
 
-- 🎵 **50 Songs** across 5 categories
+- 🎵 **238 Songs** across 5 categories
 - 🎙️ **Speech Recognition** - No manual input needed
 - 🎼 **Background Music** - Instrumental versions from iTunes API
 - 🏆 **Automatic Scoring** - Tracks wins and losses
@@ -66,11 +66,11 @@ The built files will be in the `dist` directory.
 
 ### Categories
 
-- **Pop** (10 songs) - Modern hits and classics
-- **Rock** (10 songs) - Rock anthems everyone knows
-- **Soul** (10 songs) - Timeless soul classics
-- **Hip Hop** (10 songs) - From old school to modern hits
-- **Everybody Knows** (10 songs) - Universal classics that everyone recognizes
+- **Pop** (39 songs) - Modern hits and classics
+- **Rock** (40 songs) - Rock anthems everyone knows
+- **Soul** (40 songs) - Timeless soul classics
+- **Hip Hop** (40 songs) - From old school to modern hits
+- **Everybody Knows** (79 songs) - Universal classics that everyone recognizes
 
 ## 🛠️ Technical Details
 
