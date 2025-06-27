@@ -558,16 +558,46 @@ body {
 
 /* Loading audio indicator */
 .loading-audio {
-  position: fixed;
-  bottom: 20px;
-  left: 50%;
-  transform: translateX(-50%);
-  background: rgba(0, 0, 0, 0.8);
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: rgba(0, 0, 0, 0.7);
   color: white;
   padding: 10px 20px;
   border-radius: 20px;
-  font-size: 1rem;
+  font-size: 14px;
+}
+
+/* Stop button */
+.stop-button {
+  position: fixed;
+  bottom: 30px;
+  left: 30px;
+  background: rgba(255, 59, 48, 0.9);
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 25px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
   z-index: 100;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.stop-button:hover {
+  background: rgba(255, 59, 48, 1);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+}
+
+.stop-button:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
 }
 
 /* Animations */
@@ -670,5 +700,134 @@ body {
 
 .lyric-listening .lyric-text {
   font-size: 2.4rem;
+}
+
+/* Debug mode display */
+.debug-display {
+  position: fixed;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0, 0, 0, 0.8);
+  color: #fff;
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-size: 12px;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.debug-label {
+  color: #ff6b6b;
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 10px;
+  letter-spacing: 1px;
+}
+
+.debug-answer {
+  color: #4ecdc4;
+  font-family: monospace;
+  font-size: 14px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .game-title {
+    font-size: 4rem;
+  }
+
+  .countdown-title {
+    font-size: 2rem;
+  }
+
+  .start-screen {
+    padding: 1rem;
+  }
+
+  .category-selection {
+    max-width: 100%;
+  }
+
+  .category-grid {
+    grid-template-columns: repeat(1, 1fr);
+  }
+
+  .category-btn {
+    padding: 1.5rem;
+  }
+
+  .start-btn {
+    padding: 1rem 2rem;
+  }
+
+  .countdown-display {
+    bottom: 5%;
+  }
+
+  .countdown-number {
+    font-size: 4rem;
+  }
+
+  .result-container {
+    padding: 2rem;
+  }
+
+  .result-container h2 {
+    font-size: 3rem;
+  }
+
+  .result-container p {
+    font-size: 1.5rem;
+  }
+
+  .correct-answer {
+    font-size: 2.5rem;
+  }
+
+  .score-board-large {
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  .score-item {
+    padding: 1.5rem;
+  }
+
+  .score-label {
+    font-size: 1.5rem;
+  }
+
+  .score-value {
+    font-size: 4rem;
+  }
+
+  .next-round-text {
+    font-size: 1.5rem;
+  }
+
+  .listening-timer {
+    font-size: 1rem;
+  }
+
+  .mic-indicator-corner .mic-icon {
+    font-size: 2rem;
+  }
+
+  .mic-indicator-corner .pulse-ring {
+    width: 40px;
+    height: 40px;
+  }
+
+  .loading-audio {
+    padding: 8px 16px;
+  }
+
+  .stop-button {
+    padding: 10px 20px;
+  }
 }
 
