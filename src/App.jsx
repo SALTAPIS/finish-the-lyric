@@ -298,10 +298,10 @@ const LYRICS_BY_CATEGORY = {
       answer: "we don't need no thought control",
       hint: "Pink Floyd - Another Brick in the Wall",
       searchTerm: "Pink Floyd Another Brick in the Wall"
-    },
-    {
-      setup: "Hello darkness my old friend",
-      answer: "I've come to talk with you again",
+  },
+  {
+    setup: "Hello darkness my old friend",
+    answer: "I've come to talk with you again",
       hint: "Simon & Garfunkel - The Sound of Silence",
       searchTerm: "Simon Garfunkel Sound of Silence"
     },
@@ -1399,7 +1399,7 @@ function App() {
     } else if (gameState === 'countdown' && countdown === 0) {
       // Hide title and start presenting lyrics
       setShowTitle(false)
-      setTimeout(() => {
+    setTimeout(() => {
         playBackgroundAudio()
         setGameState('presenting')
         setAnimationClass('lyric-enter')
@@ -1419,12 +1419,12 @@ function App() {
     if (gameState === 'listening' && listeningTimeLeft > 0) {
       listeningTimerRef.current = setTimeout(() => {
         setListeningTimeLeft(prev => prev - 1)
-      }, 1000)
+    }, 1000)
       return () => clearTimeout(listeningTimerRef.current)
     } else if (gameState === 'listening' && listeningTimeLeft === 0) {
       if (recognitionRef.current) {
         recognitionRef.current.stop()
-      }
+  }
     }
   }, [gameState, listeningTimeLeft])
 
@@ -1643,14 +1643,14 @@ function App() {
                   >
                     <span className="category-name">Pop</span>
                     <span className="category-count">{LYRICS_BY_CATEGORY.pop.length} songs</span>
-                  </button>
+            </button>
                   <button 
                     className="category-btn" 
                     onClick={() => handleCategorySelect('rock')}
                   >
                     <span className="category-name">Rock</span>
                     <span className="category-count">{LYRICS_BY_CATEGORY.rock.length} songs</span>
-                  </button>
+              </button>
                   <button 
                     className="category-btn" 
                     onClick={() => handleCategorySelect('soul')}
@@ -1688,8 +1688,8 @@ function App() {
             {gameState === 'countdown' && (
               <div className="countdown-display">
                 <div className="countdown-number">{countdown || 'GO!'}</div>
-              </div>
-            )}
+          </div>
+        )}
 
             {/* Main game area */}
             {(gameState === 'presenting' || gameState === 'listening' || gameState === 'result') && currentLyric && (
@@ -1698,14 +1698,14 @@ function App() {
                 {(gameState === 'presenting' || gameState === 'listening') && (
                   <div className={`lyric-container ${animationClass}`}>
                     <div className="hint">{currentLyric.hint}</div>
-                    <div className="lyric-text">
-                      "{currentLyric.setup}..."
-                    </div>
-                  </div>
-                )}
+            <div className="lyric-text">
+              "{currentLyric.setup}..."
+            </div>
+              </div>
+            )}
 
                 {/* Transcriptions in center */}
-                {gameState === 'listening' && (
+            {gameState === 'listening' && (
                   <div className="transcripts-container">
                     {transcripts.map(transcript => (
                       <div
@@ -1713,7 +1713,7 @@ function App() {
                         className={`center-transcript ${transcript.isFinal ? 'final' : 'interim'}`}
                       >
                         {transcript.text}
-                      </div>
+                    </div>
                     ))}
                   </div>
                 )}
@@ -1726,16 +1726,16 @@ function App() {
                     <div className="pulse-ring delay-1"></div>
                     <div className="pulse-ring delay-2"></div>
                     <p className="listening-timer">{listeningTimeLeft}s</p>
-                  </div>
-                )}
+              </div>
+            )}
 
                 {/* Result display */}
                 {gameState === 'result' && (
                   <div className={`result-container ${lastResult}`}>
                     {lastResult === 'correct' ? (
                       <>
-                        <h2>🎉 CORRECT! 🎉</h2>
-                        <p>The crowd nailed it!</p>
+                <h2>🎉 CORRECT! 🎉</h2>
+                <p>The crowd nailed it!</p>
                       </>
                     ) : (
                       <>
@@ -1771,8 +1771,8 @@ function App() {
                   </div>
                 </div>
                 <p className="next-round-text">Next round starting...</p>
-              </div>
-            )}
+                  </div>
+                )}
 
             {/* Audio indicator */}
             {audioVolume > 0 && gameState !== 'countdown' && gameState !== 'score-display' && (
@@ -1785,8 +1785,8 @@ function App() {
             {isLoadingAudio && (
               <div className="loading-audio">
                 Loading audio...
-              </div>
-            )}
+          </div>
+        )}
           </>
         )}
 
