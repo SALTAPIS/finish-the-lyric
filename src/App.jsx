@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react'
 import './App.css'
 import lyricsData from './data/lyrics.json'
+import { Analytics } from '@vercel/analytics/react'
 
 const LYRICS_BY_CATEGORY = lyricsData;
 
@@ -542,18 +543,29 @@ function App() {
     // Stop any ongoing recognition
     if (recognitionRef.current) {
       recognitionRef.current.stop()
+      recognitionRef.current = null
     }
     
     // Clear all timers
     if (timeoutRef.current) {
       clearTimeout(timeoutRef.current)
+      timeoutRef.current = null
     }
     if (listeningTimerRef.current) {
       clearTimeout(listeningTimerRef.current)
+      listeningTimerRef.current = null
+    }
+    if (fadeIntervalRef.current) {
+      clearInterval(fadeIntervalRef.current)
+      fadeIntervalRef.current = null
     }
     
-    // Fade out and stop audio
-    fadeOutAudio()
+    // Stop audio immediately and clear source
+    if (audioRef.current) {
+      audioRef.current.pause()
+      audioRef.current.currentTime = 0
+      audioRef.current.src = ''
+    }
     
     // Reset all game states
     setGameStarted(false)
@@ -564,14 +576,15 @@ function App() {
     setAllTranscripts([])
     allTranscriptsRef.current = []
     setLastResult(null)
-    setCountdown(3)
-    setListeningTimeLeft(20)
+    setCountdown(COUNTDOWN_TIME)
+    setListeningTimeLeft(LISTENING_TIME)
     setShowTitle(false)
     setAnimationClass('')
     setIsLoadingAudio(false)
     setUsedLyrics([])
     setWins(0)
     setLosses(0)
+    setAudioVolume(0)
   }
 
   // Cleanup
@@ -614,7 +627,10 @@ function App() {
       <div className="game-container">
         {!gameStarted ? (
           <div className="start-screen">
-            <h1 className="game-title">Finish the Lyric!</h1>
+            <h1 className="game-title">
+              <span className="title-line">Finish</span>
+              <span className="title-line">the Lyric!</span>
+            </h1>
             {!selectedCategory ? (
               <div className="category-selection">
                 <h2 className="category-title">Choose a Category</h2>
@@ -656,6 +672,18 @@ function App() {
                     <span className="category-desc">Songs so famous that everybody knows them!</span>
                   </button>
                 </div>
+                
+                {/* Notes at bottom */}
+                <div className="home-notes">
+                  <p className="debug-note">
+                    Press <kbd>Ctrl+D</kbd> (or <kbd>Cmd+D</kbd> on Mac) to enable debug mode
+                  </p>
+                  <p className="repo-link">
+                    <a href="https://github.com/SALTAPIS/finish-the-lyric" target="_blank" rel="noopener noreferrer">
+                      View on GitHub
+                    </a>
+                  </p>
+                </div>
               </div>
             ) : null}
           </div>
@@ -663,7 +691,10 @@ function App() {
           <>
             {/* Title shown during countdown */}
             {showTitle && gameState === 'countdown' && (
-              <h1 className="game-title countdown-title">Finish the Lyric!</h1>
+              <h1 className="game-title countdown-title">
+                <span className="title-line">Finish</span>
+                <span className="title-line">the Lyric!</span>
+              </h1>
             )}
 
             {/* Countdown */}
@@ -770,9 +801,9 @@ function App() {
           </div>
         )}
 
-            {/* Stop button in lower left */}
+            {/* Stop button in top left */}
             <button className="stop-button" onClick={handleStopGame}>
-              ⏹ Stop
+              ← Stop
             </button>
 
             {/* Debug mode display */}
@@ -802,6 +833,9 @@ function App() {
         {/* Hidden audio element with CORS mode */}
         <audio ref={audioRef} crossOrigin="anonymous" />
       </div>
+      
+      {/* Vercel Analytics */}
+      <Analytics />
     </div>
   )
 }

@@ -10,12 +10,14 @@ An interactive karaoke-style music trivia game where players speak or sing the n
 
 ### Features
 
-- 🎵 **200+ Songs** across 5 categories
+- 🎵 **50 Songs** across 5 categories
 - 🎙️ **Speech Recognition** - No manual input needed
 - 🎼 **Background Music** - Instrumental versions from iTunes API
 - 🏆 **Automatic Scoring** - Tracks wins and losses
 - 🎨 **Beautiful UI** - Smooth animations and visual effects
 - 📱 **Responsive Design** - Works on desktop and mobile
+- 🐛 **Debug Mode** - Press Ctrl+D (Cmd+D on Mac) to see expected answers
+- 🔄 **Autonomous Gameplay** - No clicks needed between rounds
 
 ## 🚀 Getting Started
 
@@ -29,7 +31,7 @@ An interactive karaoke-style music trivia game where players speak or sing the n
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/yourusername/finish-the-lyric.git
+git clone https://github.com/SALTAPIS/finish-the-lyric.git
 cd finish-the-lyric
 ```
 
@@ -58,17 +60,17 @@ The built files will be in the `dist` directory.
 1. **Choose a Category**: Select from Pop, Rock, Soul, Hip Hop, or "Everybody Knows"
 2. **Watch the Countdown**: Get ready as the countdown begins
 3. **Read the Lyrics**: Famous song lyrics appear on screen
-4. **Speak/Sing the Answer**: When the microphone activates, speak or sing the next line
+4. **Speak/Sing the Answer**: When the microphone activates (20 seconds), speak or sing the next line
 5. **Get Your Score**: The game automatically detects if you got it right
 6. **Keep Playing**: The game continues automatically to the next song
 
 ### Categories
 
-- **Pop** (40 songs) - Modern hits from Taylor Swift, Adele, Bruno Mars, and more
-- **Rock** (40 songs) - Classic rock anthems from Queen, AC/DC, Nirvana, and more
-- **Soul** (40 songs) - Timeless soul classics from Aretha Franklin, Marvin Gaye, and more
-- **Hip Hop** (40 songs) - From old school to modern hits
-- **Everybody Knows** (40 songs) - Universal classics that everyone recognizes
+- **Pop** (10 songs) - Modern hits and classics
+- **Rock** (10 songs) - Rock anthems everyone knows
+- **Soul** (10 songs) - Timeless soul classics
+- **Hip Hop** (10 songs) - From old school to modern hits
+- **Everybody Knows** (10 songs) - Universal classics that everyone recognizes
 
 ## 🛠️ Technical Details
 
@@ -79,21 +81,30 @@ The built files will be in the `dist` directory.
 - **Web Speech API** - Speech recognition
 - **iTunes Search API** - Instrumental music previews
 - **CSS3** - Animations and styling
+- **Vercel Analytics** - Usage tracking
 
 ### Key Features Implementation
 
 #### Speech Recognition
-The game uses the Web Speech API for continuous speech recognition with interim results. It evaluates answers based on 50% word matching to account for variations in pronunciation and speech patterns.
+The game uses the Web Speech API for continuous speech recognition with interim results. It evaluates answers based on:
+- Exact matches for complete answers
+- 60%+ word matching for substantial partial matches
+- 40%+ word matching as a fallback threshold
 
 #### Music Integration
 - Searches iTunes for instrumental/karaoke versions of songs
 - Falls back gracefully when no instrumental is available
 - Implements fade in/out effects for smooth transitions
+- Caches API results for better performance
 
 #### Game Flow
 - Fully autonomous progression between rounds
 - No manual clicks required during gameplay
-- Automatic timing for each phase (countdown, listening, results)
+- Automatic timing for each phase:
+  - Countdown: 5 seconds
+  - Listening: 20 seconds
+  - Results: 5 seconds
+  - Score display: 3 seconds
 
 ### Browser Compatibility
 
@@ -109,9 +120,11 @@ finish-the-lyric/
 ├── src/
 │   ├── App.jsx          # Main game component
 │   ├── App.css          # Styling
+│   ├── data/
+│   │   └── lyrics.json  # Song database
 │   ├── main.jsx         # Entry point
 │   └── index.css        # Global styles
-├── public/              # Static assets
+├── public/              # Static assets & PWA files
 ├── index.html           # HTML template
 ├── package.json         # Dependencies
 ├── vite.config.js       # Vite configuration
@@ -122,14 +135,14 @@ finish-the-lyric/
 
 ### Adding New Songs
 
-Add songs to the `LYRICS_BY_CATEGORY` object in `App.jsx`:
+Add songs to the `src/data/lyrics.json` file in the appropriate category:
 
 ```javascript
 {
-  setup: "First line of the song",
-  answer: "the line that comes next",
-  hint: "Artist - Song Title",
-  searchTerm: "Artist Song Title"
+  "setup": "First line of the song",
+  "answer": "the line that comes next",
+  "hint": "Artist - Song Title",
+  "searchTerm": "Artist Song Title"
 }
 ```
 
@@ -140,9 +153,16 @@ Modify `App.css` to change colors, fonts, or animations. The game uses CSS varia
 ### Game Settings
 
 Adjust these constants in `App.jsx`:
-- Listening time: Change `listeningTimeLeft` initial value (default: 20 seconds)
-- Result display time: Modify timeout in `evaluateResults` (default: 5 seconds)
-- Audio volume: Adjust `audioVolume` state (default: 0.3)
+- `COUNTDOWN_TIME`: Countdown duration (default: 5 seconds)
+- `LISTENING_TIME`: Listening duration (default: 20 seconds)
+- `RESULT_DISPLAY_TIME`: Result display duration (default: 5 seconds)
+
+## 🐛 Debug Mode
+
+Press **Ctrl+D** (or **Cmd+D** on Mac) during gameplay to enable debug mode, which shows:
+- Expected answer during the listening phase
+- What was actually heard during results
+- Console logging for troubleshooting
 
 ## 🤝 Contributing
 
@@ -174,8 +194,7 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 
 ## 📧 Contact
 
-Your Name - [@yourtwitter](https://twitter.com/lrock)
- 
+Created by [@lrock](https://twitter.com/lrock) - feel free to reach out!
 
 ---
 
